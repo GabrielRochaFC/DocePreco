@@ -9,6 +9,26 @@ body {
     background-color: #0c1317;
     color: #fff;
 }
+h2 {
+    margin: 0rem;
+}
+h3 {
+    margin: 0;
+}
+p {
+    margin: 0.5rem 0rem;
+}
+#form-precificacao {
+    display: flex;
+    flex-direction: column;
+    row-gap: 3rem;
+}
+#cost-per-unit,
+#labor {
+    display: flex;
+    flex-direction: column;
+    row-gap: 1.5rem;
+}
 .title {
     text-align: center;
 }
@@ -19,13 +39,12 @@ body {
 .input {
     padding: 0.25rem;
     margin: 0.25rem;
-    background-color: #0c1317;
     color: #fff;
     border-radius: 0.5rem;
     border-color: #fff;
 }
 .input--disabled {
-    background-color: #242c31;
+    background-color: #0c1317;
 }
 .input--delete-button {
     background-color: red;

@@ -23,29 +23,59 @@
 
     <main class="content">
         <form id="form-precificacao">
-            <div id="insumos">
-                <h2>Insumos</h2>
-                <p>Coloque todos os custos com matéria-prima, embalagem, etiqueta etc.</p>
-                <div id="input-insumos">
-                    <!-- <div>
-                        <input type="text" placeholder="Nome">
-                        <input type="text" placeholder="Quantidade usada">
-                        <input type="text" placeholder="Preço da unidade total">
-                        <input type="text" placeholder="Custo" disabled>
-                        <button><i class="fa fa-times" aria-hidden="true"></i></button>
-                    </div> -->
+            <div id="cost-per-unit">
+                <h2>1 - Custo da receita por unidade</h2>
+                <div id="insumos">
+                    <h3>Insumos</h3>
+                    <p>Coloque todos os custos com matéria-prima, embalagem, etiqueta etc. Clique no botão para
+                        adicionar o insumo.</p>
+                    <div id="input-insumos">
+                        <!-- <div>
+                            <input type="text" placeholder="Nome">
+                            <input type="text" placeholder="Quantidade usada">
+                            <input type="text" placeholder="Preço da unidade total">
+                            <input type="text" placeholder="Custo" disabled>
+                            <button><i class="fa fa-times" aria-hidden="true"></i></button>
+                        </div> -->
+                    </div>
+                    <button id="addAnotherElementBtn" class="input--add" type="button">Adicionar insumo</button>
+                    <span id="input--total"></span>
                 </div>
-                <button id="addAnotherElementBtn" class="input--add" type="button">Adicionar insumo</button>
-                <span id="input--total"></span>
+                <div id="rendimentos">
+                    <h3>Rendimento</h3>
+                    <label for="Rendimento">Quantas unidades rende a sua receita?</label>
+                    <input type="number" class="input" name="Rendimento" id="Rendimento"
+                        placeholder="Exemplo: 20 unidades" min="0">
+                </div>
+                <div id="recipe-per-unit">
+                    <h3>Valor da receita por unidade:</h3>
+                    <p id="total-recipe-per-unit">R$ 0.00</p>
+                </div>
+            </div>
+            <div id="labor">
+                <h2>2 - Mão de Obra</h2>
+                <div id="salary">
+                    <h3>Salário</h3>
+                    <label for="salario">Quantos reais você quer ganhar por mês?</label>
+                    <input type="number" class="input" name="salario" id="salario" placeholder="Exemplo: R$ 2500.00 "
+                        min="0">
+                </div>
+                <div id="hours-worked">
+                    <h3>Horas Trabalhadas</h3>
+                    <label for="horas-trabalhadas">Quantos horas você trabalha por dia?</label>
+                    <input type="time" class="input" name="horas-trabalhadas" id="horas-trabalhadas">
+                </div>
+                <div id="time-recipe">
+                    <h3>Tempo da receita</h3>
+                    <label for="tempo-receita">Quantas horas você leva pra fazer esta receita?</label>
+                    <input type="time" class="input" name="tempo-receita" id="tempo-receita">
+                </div>
             </div>
             <div>
-                <h2>Mão de Obra</h2>
+                <h2>3 - Custos fixos e variáveis</h2>
             </div>
             <div>
-                <h2>Custos fixos e variáveis</h2>
-            </div>
-            <div>
-                <h2>Lucro</h2>
+                <h2>4 - Lucro</h2>
             </div>
         </form>
 
