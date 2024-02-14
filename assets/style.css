@@ -1,0 +1,47 @@
+* {
+    font-family: "Poppins", sans-serif;
+}
+body {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    row-gap: 1rem;
+    background-color: #0c1317;
+    color: #fff;
+}
+.title {
+    text-align: center;
+}
+.content {
+    width: 1040px;
+}
+
+.input {
+    padding: 0.25rem;
+    margin: 0.25rem;
+    background-color: #0c1317;
+    color: #fff;
+    border-radius: 0.5rem;
+    border-color: #fff;
+}
+.input--disabled {
+    background-color: #242c31;
+}
+.input--delete-button {
+    background-color: red;
+    color: white;
+    border-radius: 0.5rem;
+    border: none;
+}
+.input--add {
+    background-color: darkgreen;
+    border-radius: 0.5rem;
+    border: none;
+    padding: 0.5rem;
+    margin-top: 0.5rem;
+    color: white;
+    font-weight: bolder;
+}
+#input--total {
+    font-weight: 600;
+}
