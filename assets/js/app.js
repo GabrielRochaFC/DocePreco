@@ -1,6 +1,13 @@
 const divInputInsumos = document.querySelector("#input-insumos");
 const addAnotherElementBtn = document.querySelector("#addAnotherElementBtn");
 const totalInput = document.querySelector("#input--total");
+const totalRecipePerUnit = document.querySelector("#total-recipe-per-unit");
+const rendimento = document.querySelector("#Rendimento");
+
+const f = new Intl.NumberFormat(undefined, {
+    currency: "BRL",
+    style: "currency",
+});
 
 // Função para evitar o comportamento padrão de envio do formulário ao pressionar "Enter"
 function handleEnterKey(event) {
@@ -23,8 +30,8 @@ function calcularCusto() {
     // Verifica se ambos os campos têm valores válidos
     if (!isNaN(quantidade) && !isNaN(precoUnitario)) {
         // Calcula o custo e exibe no campo de custo
-        let resultadoCalculo = (precoUnitario * quantidade).toFixed(2);
-        custoInput.value = resultadoCalculo;
+        let resultadoCalculo = precoUnitario * quantidade;
+        custoInput.value = f.format(resultadoCalculo);
 
         // Chama a função para atualizar o total
         atualizarTotal();
@@ -40,12 +47,18 @@ function atualizarTotal() {
     // Itera sobre todos os inputs de custo
     divInputInsumos.querySelectorAll("[name='custo']").forEach((custoInput) => {
         if (custoInput.value !== "") {
-            total += parseFloat(custoInput.value);
+            let str = custoInput.value;
+            let newNum = str.replace(/[^\d.]/g, "");
+            newNum = newNum.replace(/\./g, "");
+            total += newNum / 100;
         }
     });
 
     // Atualiza o campo de total
-    totalInput.textContent = `Total: R$ ${total.toFixed(2)} para 1 receita`;
+    totalInput.textContent = `Total: ${f.format(total)} para uma receita`;
+
+    // Atualizar o valor total da receita por unidade
+    updateRecipeValuePerUnit();
 }
 
 // Evento para adicionar um novo input
@@ -113,4 +126,18 @@ function criarBotaoDelete() {
     deleteButton.className = "input--delete-button";
     deleteButton.innerHTML = '<i class="fa fa-times" aria-hidden="true"></i>';
     return deleteButton;
+}
+
+rendimento.addEventListener("input", updateRecipeValuePerUnit);
+
+function updateRecipeValuePerUnit() {
+    if (rendimento.value != "" && totalInput.innerText != "") {
+        let insumo = totalInput.innerText.replace(/[^\d.]/g, "");
+        insumo = insumo.replace(/\./g, "");
+        insumo = insumo / 100;
+
+        let reciperPerUnit = insumo / parseFloat(rendimento.value);
+
+        totalRecipePerUnit.innerText = `${f.format(reciperPerUnit)}`;
+    }
 }

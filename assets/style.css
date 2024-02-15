@@ -44,6 +44,7 @@ p {
 }
 .input--disabled {
     background-color: #0c1317;
+    color: #fff;
 }
 .input--delete-button {
     background-color: red;
