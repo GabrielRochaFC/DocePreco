@@ -3,6 +3,9 @@ const addAnotherElementBtn = document.querySelector("#addAnotherElementBtn");
 const totalInput = document.querySelector("#input--total");
 const totalRecipePerUnit = document.querySelector("#total-recipe-per-unit");
 const rendimento = document.querySelector("#Rendimento");
+const salary = document.querySelector("#salario");
+const hoursWorked = document.querySelector("#horas-trabalhadas");
+const timeRecipe = document.querySelector("#tempo-receita");
 
 const f = new Intl.NumberFormat(undefined, {
     currency: "BRL",
@@ -128,8 +131,8 @@ function criarBotaoDelete() {
     return deleteButton;
 }
 
+// Função para calcular o Valor da receita por unidade
 rendimento.addEventListener("input", updateRecipeValuePerUnit);
-
 function updateRecipeValuePerUnit() {
     if (rendimento.value != "" && totalInput.innerText != "") {
         let insumo = totalInput.innerText.replace(/[^\d.]/g, "");
@@ -140,4 +143,39 @@ function updateRecipeValuePerUnit() {
 
         totalRecipePerUnit.innerText = `${f.format(reciperPerUnit)}`;
     }
+}
+
+// Eventos de input da seção de mão de obra
+salary.addEventListener("input", getLaborValues);
+hoursWorked.addEventListener("input", getLaborValues);
+timeRecipe.addEventListener("input", getLaborValues);
+
+// Função que pega os valores da mão de obra
+function getLaborValues() {
+    let resultHoursWorked = 0;
+    let resultTimeRecipe = 0;
+    let resultSalary = 0;
+    if (hoursWorked.value != ""){
+        resultHoursWorked = parseFloat(hoursWorked.value);
+    }
+    if (timeRecipe.value != "") {
+        let hoursMinutes = timeRecipe.value.split(/[.:]/);
+        let hours = parseInt(hoursMinutes[0], 10);
+        let minutes = hoursMinutes[1] ? parseInt(hoursMinutes[1], 10) : 0;
+        resultTimeRecipe = hours + minutes / 60;
+    }
+    if (salary.value != "") {
+        resultSalary = parseFloat(salary.value);
+    }
+    if (hoursWorked.value != "" && timeRecipe.value != "" && salary.value != ""){
+        // enviando os valores pegados pra a função que calcula a mão de obra
+        calculateLabor(resultHoursWorked, resultTimeRecipe, resultSalary);
+    }
+}
+
+// Calculando o valor da mão de obra
+function calculateLabor(hoursWorked, timeRecipe, salary){
+    let labor = salary / (hoursWorked * 5);
+    let laborOfTheRecipe = labor * timeRecipe;
+    console.log(laborOfTheRecipe);
 }
