@@ -6,6 +6,18 @@ const rendimento = document.querySelector("#Rendimento");
 const salary = document.querySelector("#salario");
 const hoursWorked = document.querySelector("#horas-trabalhadas");
 const timeRecipe = document.querySelector("#tempo-receita");
+const fixedCosts = document.querySelector("#fixa");
+const variableCosts = document.querySelector("#variaveis");
+const profit = document.querySelector("#input-lucro");
+const shipping = document.querySelector("#frete");
+const taxes = document.querySelector("#impostos");
+const calculatePriceBtn = document.querySelector("#calculate-price");
+let recipeTotal;
+let laborOfTheRecipe;
+let fixedVariable;
+let profitValue;
+let taxesValue;
+let shippingValue;
 
 const f = new Intl.NumberFormat(undefined, {
     currency: "BRL",
@@ -54,6 +66,7 @@ function atualizarTotal() {
             let newNum = str.replace(/[^\d.]/g, "");
             newNum = newNum.replace(/\./g, "");
             total += newNum / 100;
+            recipeTotal = total;
         }
     });
 
@@ -155,7 +168,7 @@ function getLaborValues() {
     let resultHoursWorked = 0;
     let resultTimeRecipe = 0;
     let resultSalary = 0;
-    if (hoursWorked.value != ""){
+    if (hoursWorked.value != "") {
         resultHoursWorked = parseFloat(hoursWorked.value);
     }
     if (timeRecipe.value != "") {
@@ -167,15 +180,71 @@ function getLaborValues() {
     if (salary.value != "") {
         resultSalary = parseFloat(salary.value);
     }
-    if (hoursWorked.value != "" && timeRecipe.value != "" && salary.value != ""){
+    if (
+        hoursWorked.value != "" &&
+        timeRecipe.value != "" &&
+        salary.value != ""
+    ) {
         // enviando os valores pegados pra a função que calcula a mão de obra
         calculateLabor(resultHoursWorked, resultTimeRecipe, resultSalary);
     }
 }
 
 // Calculando o valor da mão de obra
-function calculateLabor(hoursWorked, timeRecipe, salary){
+function calculateLabor(hoursWorked, timeRecipe, salary) {
     let labor = salary / (hoursWorked * 5);
-    let laborOfTheRecipe = labor * timeRecipe;
-    console.log(laborOfTheRecipe);
+    laborOfTheRecipe = labor * timeRecipe;
+}
+
+fixedCosts.addEventListener("input", calculateFixedVariable);
+variableCosts.addEventListener("input", calculateFixedVariable);
+
+// Calcula os custos fixos e variaveis
+function calculateFixedVariable() {
+    let fixed = parseFloat(fixedCosts.value);
+    let variable = parseFloat(variableCosts.value);
+
+    let totalCosts = fixed + variable;
+
+    if (hoursWorked.value != "" && !isNaN(fixed) && !isNaN(variable)) {
+        fixedVariable = totalCosts / (parseFloat(hoursWorked.value) * 5);
+    }
+}
+
+shipping.addEventListener("input", () => {
+    shippingValue = parseFloat(shipping.value);
+});
+taxes.addEventListener("input", () => {
+    taxesValue = parseFloat(taxes.value);
+});
+profit.addEventListener("input", () => {
+    profitValue = parseFloat(profit.value);
+});
+
+calculatePriceBtn.addEventListener("click", calculatePrice);
+
+function calculatePrice() {
+    let units = rendimento.value;
+    if (
+        !isNaN(recipeTotal) &&
+        !isNaN(laborOfTheRecipe) &&
+        !isNaN(fixedVariable) &&
+        !isNaN(profitValue) &&
+        !isNaN(taxesValue) &&
+        !isNaN(shippingValue) &&
+        !isNaN(units) &&
+        units != 0
+    ) {
+        console.log("entrou");
+        let total = recipeTotal + laborOfTheRecipe + fixedVariable;
+        total *= 1 + profitValue / 100;
+        total /= units;
+        total *= 1 + taxesValue / 100;
+        total += shippingValue;
+        console.log(total);
+        let resultado = document.querySelector("#resultado");
+        resultado.innerText = `O preço final do seu doce deverá ser de ${f.format(
+            total
+        )}`;
+    }
 }

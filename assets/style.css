@@ -1,13 +1,21 @@
-* {
-    font-family: "Poppins", sans-serif;
+:root {
+    --dark-pink: #13000a;
+    --black: #0c1317;
+    --white: #ffffff;
+    --pink: #ff038f;
+    --green: #006400;
+    --poppins: "Poppins", sans-serif;
+    --satisfy: "Satisfy", cursive;
 }
+
 body {
     display: flex;
     align-items: center;
     flex-direction: column;
     row-gap: 1rem;
-    background-color: #0c1317;
-    color: #fff;
+    background-color: var(--dark-pink);
+    color: var(--white);
+    font-family: var(--poppins);
 }
 h2 {
     margin: 0rem;
@@ -26,27 +34,22 @@ p {
     row-gap: 3rem;
 }
 
-#cost-per-unit,
-#labor,
-#expenses,
-#profit,
-#shipping-taxes,
-#results {
+.box {
     display: flex;
     flex-direction: column;
     row-gap: 1.5rem;
 }
 #labor,
 #profit {
-    color: black;
+    color: var(--dark-pink);
     padding: 2rem 0.5rem;
     border-radius: 1rem;
-    background-color: #FFF;
+    background-color: var(--white);
 }
 
 #results {
-    background-color: #006400;
-    color: #FFF;
+    background-color: var(--pink);
+    color: #fff;
     align-items: center;
     width: fit-content;
     align-self: center;
@@ -56,13 +59,36 @@ p {
     row-gap: 0.5rem;
 }
 #resultado {
-    font-weight: 800;
+    font-weight: 500;
+    font-style: italic;
     font-size: 1.25rem;
 }
+#calculate-price {
+    background-color: var(--pink);
+    width: fit-content;
+    padding: 0.5rem 2rem;
+}
+#calculate-price:hover {
+    cursor: pointer;
+}
+#calculate-price:active {
+    background-color: #cc0070;
+}
+
+/* TITULO */
 .title {
     text-align: center;
 }
+.header__name {
+    font-family: var(--satisfy);
+    font-weight: 600;
+    font-style: normal;
+    font-size: 3rem;
+    margin-bottom: 0;
+    color: var(--pink);
+}
 
+/* INPUTS */
 .input {
     padding: 0.25rem;
     margin: 0.25rem;
