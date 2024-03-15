@@ -89,7 +89,13 @@ p {
 }
 
 /* INPUTS */
+.div {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0.75rem 0rem;
+}
 .input {
+    width: 12rem;
     padding: 0.25rem;
     margin: 0.25rem;
     border-radius: 0.5rem;

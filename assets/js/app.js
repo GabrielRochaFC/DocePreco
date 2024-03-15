@@ -34,6 +34,9 @@ function handleEnterKey(event) {
 // Função para calcular o custo
 function calcularCusto() {
     // Obtém os valores dos campos de quantidade e preço
+    let quantidadeEmbalagem = parseFloat(
+        this.parentElement.querySelector("[name='qtd-emb']").value
+    );
     let quantidade = parseFloat(
         this.parentElement.querySelector("[name='qtd']").value
     );
@@ -43,9 +46,14 @@ function calcularCusto() {
     let custoInput = this.parentElement.querySelector("[name='custo']");
 
     // Verifica se ambos os campos têm valores válidos
-    if (!isNaN(quantidade) && !isNaN(precoUnitario)) {
+    if (
+        !isNaN(quantidadeEmbalagem) &&
+        !isNaN(quantidade) &&
+        !isNaN(precoUnitario)
+    ) {
         // Calcula o custo e exibe no campo de custo
-        let resultadoCalculo = precoUnitario * quantidade;
+        let resultadoCalculo =
+            precoUnitario * (quantidade / quantidadeEmbalagem);
         custoInput.value = f.format(resultadoCalculo);
 
         // Chama a função para atualizar o total
@@ -81,22 +89,36 @@ function atualizarTotal() {
 addAnotherElementBtn.addEventListener("click", () => {
     // Criação do container div para os inputs e botão de exclusão
     let novoInsumoDiv = document.createElement("div");
+    novoInsumoDiv.classList.add("div");
 
-    // Adiciona os inputs de Nome, Quantidade, Preço da unidade total e Custo
+    // Adiciona os inputs de Nome, Quantidade da embalagem, quantidade usada Preço da unidade total e Custo
     let nomeInput = criarInput("text", "nome", "Nome");
-    let quantidadeInput = criarInput("number", "qtd", "Quantidade usada", 0);
-    let precoInput = criarInput("number", "preco", "Preço da unidade total", 0);
+    let quantidadeEmbalagem = criarInput(
+        "number",
+        "qtd-emb",
+        "Qtd da embalagem",
+        0
+    );
+    let quantidadeUsada = criarInput("number", "qtd", "Quantidade usada", 0);
+    let precoInput = criarInput(
+        "number",
+        "preco",
+        "Preço da embalagem total",
+        0
+    );
     let custoInput = criarInput("text", "custo", "Custo", 0, true);
 
     custoInput.classList.add("input--disabled");
 
     nomeInput.addEventListener("keypress", handleEnterKey);
-    quantidadeInput.addEventListener("keypress", handleEnterKey);
+    quantidadeEmbalagem.addEventListener("keypress", handleEnterKey);
+    quantidadeUsada.addEventListener("keypress", handleEnterKey);
     precoInput.addEventListener("keypress", handleEnterKey);
     custoInput.addEventListener("keypress", handleEnterKey);
 
     // Adiciona os eventos de escuta para cálculo automático do custo
-    quantidadeInput.addEventListener("input", calcularCusto);
+    quantidadeEmbalagem.addEventListener("input", calcularCusto);
+    quantidadeUsada.addEventListener("input", calcularCusto);
     precoInput.addEventListener("input", calcularCusto);
 
     // Adiciona o botão de exclusão
@@ -111,7 +133,8 @@ addAnotherElementBtn.addEventListener("click", () => {
 
     // Adiciona os elementos criados ao container div
     novoInsumoDiv.appendChild(nomeInput);
-    novoInsumoDiv.appendChild(quantidadeInput);
+    novoInsumoDiv.appendChild(quantidadeEmbalagem);
+    novoInsumoDiv.appendChild(quantidadeUsada);
     novoInsumoDiv.appendChild(precoInput);
     novoInsumoDiv.appendChild(custoInput);
     novoInsumoDiv.appendChild(deleteButton);
